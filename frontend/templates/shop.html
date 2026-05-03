@@ -1,0 +1,346 @@
+{% extends "base.html" %}
+
+{% block title %}Shop | Aura{% endblock %}
+
+{% block extra_css %}
+<style>
+    .shop-header {
+        padding: 8rem 5% 4rem;
+        background-color: var(--color-charcoal);
+        text-align: center;
+    }
+
+    .shop-header h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .shop-header p {
+        color: var(--color-gray);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .shop-filters {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        padding: 2rem 5%;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .filter-btn {
+        background: none;
+        border: none;
+        color: var(--color-gray);
+        font-family: var(--font-body);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: var(--transition-smooth);
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+        color: var(--color-gold);
+    }
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 3rem;
+        padding: 4rem 5%;
+    }
+
+    .product-card {
+        background: var(--color-charcoal);
+        border: 1px solid rgba(255,255,255,0.02);
+        transition: var(--transition-smooth);
+    }
+
+    .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+    }
+
+    .product-img-container {
+        position: relative;
+        height: 400px;
+        overflow: hidden;
+    }
+
+    .product-img-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+    }
+
+    .product-card:hover .product-img-container img {
+        transform: scale(1.05);
+    }
+
+    .product-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(10,10,10,0.4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: var(--transition-smooth);
+    }
+
+    .product-card:hover .product-overlay {
+        opacity: 1;
+    }
+
+    .product-info {
+        padding: 1.5rem;
+        text-align: center;
+    }
+
+    .product-title {
+        font-family: var(--font-heading);
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .product-price {
+        color: var(--color-gold);
+        font-weight: 500;
+        letter-spacing: 1px;
+    }
+
+    .add-to-cart-btn {
+        cursor: pointer;
+    }
+
+    /* Added notification flash */
+    .cart-flash {
+        position: fixed;
+        bottom: 100px;
+        right: 40px;
+        background: var(--color-charcoal);
+        border: 1px solid var(--color-gold);
+        color: var(--color-gold);
+        padding: 1rem 1.5rem;
+        font-family: var(--font-body);
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+        border-radius: 4px;
+        z-index: 99999;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        pointer-events: none;
+    }
+    .cart-flash.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+{% set p1_img = url_for('static', path='/img/product1.png') %}
+{% set p2_img = url_for('static', path='/img/product2.png') %}
+{% set p3_img = url_for('static', path='/img/product3.png') %}
+{% set p4_img = url_for('static', path='/img/product4.png') %}
+{% set p6_img = url_for('static', path='/img/product6.png') %}
+{% set p8_img = url_for('static', path='/img/product8.png') %}
+{% set p9_img = url_for('static', path='/img/product9.png') %}
+{% set p10_img = url_for('static', path='/img/product10.png') %}
+
+    <div class="shop-header">
+        <h1>The Collection</h1>
+        <p>Explore our latest arrivals, featuring exquisite materials and unparalleled attention to detail.</p>
+    </div>
+
+    <div class="shop-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="ready-to-wear">Ready to Wear</button>
+        <button class="filter-btn" data-filter="men">Men's Collection</button>
+        <button class="filter-btn" data-filter="leather-goods">Leather Goods</button>
+        <button class="filter-btn" data-filter="accessories">Accessories</button>
+    </div>
+
+    <div class="product-grid" id="product-grid">
+        <!-- Product 1 -->
+        <div class="product-card" data-category="ready-to-wear">
+            <div class="product-img-container">
+                <img src="{{ p1_img }}" alt="Midnight Velvet Gown">
+                <div class="product-overlay">
+                    <button class="btn btn-outline add-to-cart-btn"
+                        onclick="addToCart('p1', 'Midnight Velvet Gown', 3500, '{{ p1_img }}')">
+                        Add to Bag
+                    </button>
+                </div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Midnight Velvet Gown</h3>
+                <p class="product-price">$3,500</p>
+            </div>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="product-card" data-category="leather-goods">
+            <div class="product-img-container">
+                <img src="{{ p2_img }}" alt="Obsidian Leather Tote">
+                <div class="product-overlay">
+                    <button class="btn btn-outline add-to-cart-btn"
+                        onclick="addToCart('p2', 'Obsidian Leather Tote', 2100, '{{ p2_img }}')">
+                        Add to Bag
+                    </button>
+                </div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Obsidian Leather Tote</h3>
+                <p class="product-price">$2,100</p>
+            </div>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="product-card" data-category="accessories">
+            <div class="product-img-container">
+                <img src="{{ p3_img }}" alt="Champagne Gold Sunglasses">
+                <div class="product-overlay">
+                    <button class="btn btn-outline add-to-cart-btn"
+                        onclick="addToCart('p3', 'Champagne Gold Sunglasses', 850, '{{ p3_img }}')">
+                        Add to Bag
+                    </button>
+                </div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Champagne Gold Sunglasses</h3>
+                <p class="product-price">$850</p>
+            </div>
+        </div>
+
+        <!-- Product 4 -->
+        <div class="product-card" data-category="ready-to-wear">
+            <div class="product-img-container">
+                <img src="{{ p4_img }}" alt="Charcoal Cashmere Coat">
+                <div class="product-overlay">
+                    <button class="btn btn-outline add-to-cart-btn"
+                        onclick="addToCart('p4', 'Charcoal Cashmere Coat', 4200, '{{ p4_img }}')">
+                        Add to Bag
+                    </button>
+                </div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Charcoal Cashmere Coat</h3>
+                <p class="product-price">$4,200</p>
+            </div>
+        </div>
+
+
+        <!-- Product 6 -->
+        <div class="product-card" data-category="men">
+            <div class="product-img-container">
+                <img src="{{ p6_img }}" alt="Tailored Charcoal Blazer">
+                <div class="product-overlay">
+                    <button class="btn btn-outline add-to-cart-btn"
+                        onclick="addToCart('p6', 'Tailored Charcoal Blazer', 2800, '{{ p6_img }}')">
+                        Add to Bag
+                    </button>
+                </div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Tailored Charcoal Blazer</h3>
+                <p class="product-price">$2,800</p>
+            </div>
+        </div>
+
+
+        <!-- Product 8 -->
+        <div class="product-card" data-category="accessories">
+            <div class="product-img-container">
+                <img src="{{ p8_img }}" alt="Gold Link Bracelet">
+                <div class="product-overlay">
+                    <button class="btn btn-outline add-to-cart-btn"
+                        onclick="addToCart('p8', 'Gold Link Bracelet', 1800, '{{ p8_img }}')">
+                        Add to Bag
+                    </button>
+                </div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Gold Link Bracelet</h3>
+                <p class="product-price">$1,800</p>
+            </div>
+        </div>
+
+        <!-- Product 9 - Men's Collection -->
+        <div class="product-card" data-category="men">
+            <div class="product-img-container">
+                <img src="{{ p9_img }}" alt="Midnight Wool Suit">
+                <div class="product-overlay">
+                    <button class="btn btn-outline add-to-cart-btn"
+                        onclick="addToCart('p9', 'Midnight Wool Suit', 5200, '{{ p9_img }}')">
+                        Add to Bag
+                    </button>
+                </div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Midnight Wool Suit</h3>
+                <p class="product-price">$5,200</p>
+            </div>
+        </div>
+
+        <!-- Product 10 - Men's Collection -->
+        <div class="product-card" data-category="men">
+            <div class="product-img-container">
+                <img src="{{ p10_img }}" alt="Brushed Leather Loafers">
+                <div class="product-overlay">
+                    <button class="btn btn-outline add-to-cart-btn"
+                        onclick="addToCart('p10', 'Brushed Leather Loafers', 1450, '{{ p10_img }}')">
+                        Add to Bag
+                    </button>
+                </div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Brushed Leather Loafers</h3>
+                <p class="product-price">$1,450</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Flash Notification -->
+    <div class="cart-flash" id="cart-flash">✓ Added to your bag</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Filter Logic
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const productCards = document.querySelectorAll('.product-card');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const filter = btn.getAttribute('data-filter');
+
+            productCards.forEach(card => {
+                if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    // Flash notification on Add to Cart
+    const originalAddToCart = window.addToCart;
+    window.addToCart = (id, name, price, img) => {
+        originalAddToCart(id, name, price, img);
+        const flash = document.getElementById('cart-flash');
+        flash.classList.add('show');
+        setTimeout(() => flash.classList.remove('show'), 2500);
+    };
+</script>
+{% endblock %}

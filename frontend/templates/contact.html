@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block title %}Contact | Aura{% endblock %}
+
+{% block extra_css %}
+<style>
+    .contact-container {
+        padding: 10rem 5% 5rem;
+        display: flex;
+        gap: 4rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .contact-form-section {
+        flex: 1;
+        background: var(--color-charcoal);
+        padding: 3rem;
+        border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .contact-form-section h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: var(--color-gold);
+    }
+
+    .contact-form-section p {
+        color: var(--color-gray);
+        margin-bottom: 2rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        font-family: var(--font-body);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 0.5rem;
+        color: var(--color-gray);
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 1rem;
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.2);
+        color: var(--color-white);
+        font-family: var(--font-body);
+        outline: none;
+        transition: var(--transition-smooth);
+    }
+
+    .form-control:focus {
+        border-color: var(--color-gold);
+    }
+
+    textarea.form-control {
+        height: 150px;
+        resize: vertical;
+    }
+
+    .contact-info-section {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .info-card {
+        padding: 2rem;
+        border-left: 2px solid var(--color-gold);
+    }
+
+    .info-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .info-card p {
+        color: var(--color-gray);
+        margin-bottom: 0.5rem;
+    }
+
+    .info-card i {
+        color: var(--color-gold);
+        width: 30px;
+    }
+
+    .map-container {
+        flex: 1;
+        background: #111;
+        border: 1px solid rgba(255,255,255,0.05);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--color-gray);
+        min-height: 300px;
+        position: relative;
+    }
+
+    .map-overlay {
+        text-align: center;
+    }
+
+    .map-overlay i {
+        font-size: 3rem;
+        color: var(--color-gold);
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="contact-container">
+        <div class="contact-form-section">
+            <h1>Private Inquiry</h1>
+            <p>Our concierges are available to assist you with bespoke requests, styling advice, or any questions regarding our collections.</p>
+            
+            <form onsubmit="event.preventDefault(); alert('Inquiry sent successfully.');">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <select id="subject" class="form-control" style="background: var(--color-charcoal);">
+                        <option>Bespoke Tailoring</option>
+                        <option>Private Styling</option>
+                        <option>General Inquiry</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" class="form-control" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+            </form>
+        </div>
+
+        <div class="contact-info-section">
+            <div class="info-card">
+                <h3>Flagship Boutique</h3>
+                <p><i class="fa-solid fa-location-dot"></i> 15 Rue de la Paix, 75002 Paris, France</p>
+                <p><i class="fa-solid fa-phone"></i> +33 1 42 61 11 11</p>
+                <p><i class="fa-solid fa-envelope"></i> paris@aura.com</p>
+            </div>
+            
+            <div class="map-container">
+                <div class="map-overlay">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    <p>Interactive Map Mockup</p>
+                </div>
+                <!-- In a real scenario, this would be an iframe or map integration -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

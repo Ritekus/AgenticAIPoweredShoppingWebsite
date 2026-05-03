@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Aura | Luxury Fashion{% endblock %}</title>
+    <meta name="description" content="Discover the ultimate in luxury fashion with Aura. Sophisticated, minimalist, and ultra-premium collections.">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <!-- Global Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-brand"><a href="/">Aura</a></div>
+        <ul class="nav-links">
+            <li><a href="/" class="{% if page == 'home' %}active{% endif %}">Home</a></li>
+            <li><a href="/shop" class="{% if page == 'shop' %}active{% endif %}">Shop</a></li>
+            <li><a href="/about" class="{% if page == 'about' %}active{% endif %}">Heritage</a></li>
+            <li><a href="/contact" class="{% if page == 'contact' %}active{% endif %}">Boutiques</a></li>
+        </ul>
+        <div class="nav-actions">
+            <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+            <a href="#" id="cart-icon" style="position: relative;">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span class="cart-badge" id="cart-badge">0</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Global Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>Aura</h4>
+                <p>Elevating the art of dressing. Experience unparalleled craftsmanship and visionary design.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="/shop">New Arrivals</a></li>
+                    <li><a href="/shop">The Velvet Collection</a></li>
+                    <li><a href="/shop">Leather Goods</a></li>
+                    <li><a href="/shop">Runway Archive</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="#">Bespoke Tailoring</a></li>
+                    <li><a href="#">Private Styling</a></li>
+                    <li><a href="/contact">Book an Appointment</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <p>Subscribe to our atelier dispatches for exclusive previews.</p>
+                <div style="margin-top: 1rem; display: flex; gap: 1rem;">
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-pinterest"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Aura Luxury Maison. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Sidebar -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Bag</h3>
+            <button class="cart-close" id="cart-close"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <!-- Items will be injected here via JS -->
+            <div class="empty-cart-msg" id="empty-cart-msg">Your bag is currently empty.</div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total-price">$0</span>
+            </div>
+            <button class="btn btn-primary" style="width: 100%;">Checkout</button>
+        </div>
+    </div>
+
+    <!-- Digital Stylist (Chatbot) UI -->
+    <div class="chatbot-container">
+        <div class="chatbot-window" id="chatbot-window">
+            <div class="chatbot-header">
+                <div class="chatbot-title"><i class="fa-solid fa-sparkles"></i> Digital Stylist</div>
+                <div class="chatbot-close" id="chatbot-close"><i class="fa-solid fa-xmark"></i></div>
+            </div>
+            <div class="chatbot-body" id="chatbot-body">
+                <div class="chat-msg system">
+                    Welcome to Aura. I can help you find the perfect outfit or answer your styling questions. Ask me anything!
+                </div>
+                <div class="chatbot-suggestions">
+                    <button class="chip">What's new in velvet?</button>
+                    <button class="chip">Book a styling appointment</button>
+                    <button class="chip">How do I return?</button>
+                </div>
+            </div>
+            <div class="chatbot-input-area">
+                <input type="text" id="chat-input" placeholder="Type your message...">
+                <button class="chatbot-send" id="chat-send"><i class="fa-regular fa-paper-plane"></i></button>
+            </div>
+        </div>
+        <div class="chatbot-toggle" id="chatbot-toggle">
+            <i class="fa-regular fa-comment-dots"></i>
+        </div>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', path='/js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
